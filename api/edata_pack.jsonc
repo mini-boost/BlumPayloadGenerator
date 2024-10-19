@@ -1,0 +1,19 @@
+{
+    "edata": {
+        "id": "b4d84a5a-bdf1-41b1-bdaa-2dd91bcff29c", //random uuid 1
+        "method": "pack",
+        "payload": {
+            "gameId": "c26feb16-05a8-4a6e-a4cc-3a174db3cb04", //Game id
+            "challenge": {
+                "id": "40c18ec3-65e4-4871-804a-6414d843dfff", //random uuid 2
+                "nonce": 50714,
+                "hash": "000024ad9c416a8d2763ac28a6e4c67e1ba5bdead265158394176d161f91fece"
+            },
+            "earnedAssets": {
+                "CLOVER": {
+                    "amount": "32"
+                }
+            }
+        }
+    }
+}

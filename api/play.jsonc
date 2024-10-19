@@ -1,0 +1,17 @@
+{
+    "gameId": "82aded16-f0e6-40db-842f-47e27af62d31",
+    "assets": {
+        "BOMB": {
+            "probability": "0.03",
+            "perClick": "1"
+        },
+        "CLOVER": {
+            "probability": "0.95",
+            "perClick": "1"
+        },
+        "FREEZE": {
+            "probability": "0.02",
+            "perClick": "1"
+        }
+    }
+}
