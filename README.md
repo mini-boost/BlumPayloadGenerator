@@ -1,7 +1,6 @@
 # Blum Payload Generator API 
 
-![work image](assets\img.png)
-
+![work image](assets/img.png)
 available two methods:
 1. GET `/status` - return `{"status": "ok}` if all ok
 2. POST `/getPayload` - return payload and another data. 
