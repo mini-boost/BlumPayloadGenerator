@@ -1,4 +1,5 @@
 import fs from "fs";
+// @ts-ignore
 import {B, F, R} from "../blum-includes/game-Bg7iVTVS.js";
 
 
