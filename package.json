@@ -1,10 +1,19 @@
 {
   "name": "blum-payload-generator",
-  "module": "app.ts",
+  "version": "1.0.0",
+  "author": "Arthur Koba",
+  "license": "MIT",
+  "description": "Mini Server for generation blum game payload.",
+  "main": "src/app.ts",
   "type": "module",
+  "scripts": {
+    "start": "tsx src/app.ts",
+    "test": "tsx src/tests.ts"
+  },
   "devDependencies": {
     "@types/bun": "^1.1.11",
-    "@types/express": "^5.0.0"
+    "@types/express": "^5.0.0",
+    "tsx": "^4.19.2"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

@@ -1,5 +1,5 @@
 import fs from "fs";
-import {B, F, R} from "./dumps/game-Bg7iVTVS";
+import {B, F, R} from "../blum-includes/game-Bg7iVTVS.js";
 
 
 export type GameId = string
@@ -25,6 +25,10 @@ export class GameIdNotSetError extends Error {
     message = "gameId not set from json body"
 }
 
+export class WasmFileNotLoadedError extends Error {
+    message = 'wasm file not loaded for generator! use "await loadWasmFileForGenerator("game_wasm_bg-BnV071fP.wasm")"'
+}
+
 export async function loadWasmFileForGenerator(gameWasmFile: string) {
     const file = fs.readFileSync(gameWasmFile);
     await R(file);
@@ -44,8 +48,18 @@ export function generatePayload(wasmData: WasmDataType) : PayloadType {
 
 export function generateChallenge(gameId: GameId) : ChallengeType {
     if (!gameId) throw new GameIdNotSetError();
-    const challengeData = F(gameId)
-    return {id: generateUUID(), ...challengeData};
+    try {
+        const challengeData = F(gameId)
+        return {id: generateUUID(), ...challengeData};
+    } catch (error) {
+        if (error instanceof TypeError &&
+            error.message === "Cannot read properties of undefined (reading '__wbindgen_add_to_stack_pointer')"
+        ) {
+            throw new WasmFileNotLoadedError();
+        }
+        throw error
+    }
+
 }
 
 export async function getPayload(gameId: GameId, earnedAssets: EarnedAssetsType) {

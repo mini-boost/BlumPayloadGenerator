@@ -5,7 +5,7 @@ import {
     generatePayload,
     generateChallenge,
     GameIdNotSetError
-} from "./generator.ts"
+} from "./generator"
 
 
 export const router = Router()
@@ -27,7 +27,7 @@ router.post("/getPayload", async (req: Request, res: Response) => {
             earnedAssets: earnedAssets
         };
         const payload = generatePayload(wasmData);
-
+        console.log(`/getPayload | ${req.hostname}} | generated payload to game: ${gameId}, assets: ${JSON.stringify(earnedAssets)}`);
         res.status(StatusCodes.OK).json({
             payload: payload,
             ...wasmData,

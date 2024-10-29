@@ -1,9 +1,9 @@
 import express from "express"
-import {router} from "./router.ts"
-import {loadWasmFileForGenerator} from "./generator.ts"
+import {router} from "./router"
+import {loadWasmFileForGenerator} from "./generator"
 
 const PORT = 7000
-const gameWasmFile = "./dumps/game_wasm_bg-BnV071fP.wasm"
+const gameWasmFile = "blum-includes/game_wasm_bg-BnV071fP.wasm"
 
 
 const app = express()
