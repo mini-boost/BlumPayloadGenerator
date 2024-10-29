@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import {router} from "./router";
 import {loadWasmFileForGenerator} from "./generator";
-import {showLogo} from "./logo";
+import {showLogo, showAdMessages} from "./logo";
 
 dotenv.config()
 
@@ -20,7 +20,8 @@ async function start() {
 }
 
 start().then(() => {
-    showLogo()
+    showLogo();
+    showAdMessages();
     app.listen(PORT, () => {
         console.log(`Server Blum payload generator is started and listening on port ${PORT}`);
     });

@@ -17,3 +17,8 @@ export function showLogo() {
         "/_/ |_\\____/_.___/\\__,_/  /_/   /_/   \\____/\\__,_/\\__,_/\\___/\\__/_/\\____/_/ /_/        \n" +
         "                                                                                       ")
 }
+
+export function showAdMessages() {
+    console.warn("If you want to thank the script developer, subscribe to the telegram channel - https://t.me/koba_light_systems")
+    console.log("Just please don't use bots to subscribe. Thank you! Enjoy using it!\n")
+}

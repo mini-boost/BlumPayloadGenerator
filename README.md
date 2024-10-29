@@ -1,5 +1,7 @@
 # Blum Payload Generator API 
 
+![work image](assets\img.png)
+
 available two methods:
 1. GET `/status` - return `{"status": "ok}` if all ok
 2. POST `/getPayload` - return payload and another data. 
@@ -16,3 +18,9 @@ available two methods:
 # Run payload server
 
 use command: `npm run start`
+
+# Partners and Friends
+- [Koba Light Systems & Color Music](https://t.me/koba_light_systems) on Telegram. 
+(A big request from the author of the script - subscribe as a sign of gratitude)
+- [Koba Production](https://github.com/KobaProduction) on GitHub
+- [HiddenCode](https://t.me/hidden_coding) on Telegram
