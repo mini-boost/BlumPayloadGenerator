@@ -6,13 +6,20 @@ import {
     generateChallenge,
     GameIdNotSetError
 } from "./generator"
+import {Logger} from "./logger";
+import {reqLog} from "./utils";
 
 
 export const router = Router()
 
+const log = new Logger("API")
+
+let counter = 0
+
+const debug = (req: Request, message: string): void => log.debug(`${reqLog(req)} | ${message}`);
 
 router.get("/status", async (req: Request, res: Response) => {
-    console.log(`/status | ${req.hostname}}`)
+    debug(req, "success");
     res.status(StatusCodes.OK).json({status: "ok"})
 })
 
@@ -21,13 +28,16 @@ router.post("/getPayload", async (req: Request, res: Response) => {
         const gameId = req.body.gameId;
         const earnedAssets = req.body.earnedAssets;
 
+        let generationTime = Date.now()
         let wasmData = {
             gameId: gameId,
             challenge: generateChallenge(gameId),
             earnedAssets: earnedAssets
         };
         const payload = generatePayload(wasmData);
-        console.log(`/getPayload | ${req.hostname}} | generated payload to game: ${gameId}, assets: ${JSON.stringify(earnedAssets)}`);
+        generationTime = (Date.now() - generationTime)
+        const assets = JSON.stringify(earnedAssets)
+        debug(req, `[${counter++}] generated (${generationTime}ms) payload to game: ${gameId}, assets: ${assets}`);
         res.status(StatusCodes.OK).json({
             payload: payload,
             ...wasmData,
