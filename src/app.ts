@@ -20,9 +20,14 @@ async function start() {
 }
 
 start().then(() => {
+    const nodeMajorVersion = parseInt(process.version.replace("v", "").split(".")[0])
+    if (nodeMajorVersion < 20) {
+        return console.error(`Min version Node.js - 20, you have ${process.version} version.`)
+    }
     showLogo();
     showAdMessages();
     app.listen(PORT, () => {
         console.log(`Server Blum payload generator is started and listening on port ${PORT}`);
     });
 })
+
