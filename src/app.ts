@@ -7,7 +7,7 @@ import {showLogo, showAdMessages} from "./logo";
 dotenv.config()
 
 const PORT = process.env.PORT || 9876;
-const gameWasmFile = "blum-includes/game_wasm_bg-BnV071fP.wasm";
+const gameWasmFile = "blum-includes/game_wasm_bg-DYwJl-6R.wasm";
 
 
 const app = express();

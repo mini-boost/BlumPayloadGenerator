@@ -1,14 +1,16 @@
 import fs from "fs";
 // @ts-ignore
-import {B, F, R} from "../blum-includes/game-Bg7iVTVS.js";
+import {D, F, R} from "../blum-includes/game-BHQ4ZG5B.js";
 
 
 export type GameId = string
 type PayloadType = string
-type Amount = {amount: string}
-type CloverAssetsType = {CLOVER: Amount}
-type DogsAssetsType = {Dogs: Amount}
-export type EarnedAssetsType = CloverAssetsType | DogsAssetsType
+
+type Clicks = {clicks: number}
+
+interface AssetsClicksType {
+    [any: string]: Clicks;
+}
 
 type ChallengeType = {
     nonce: number,
@@ -16,10 +18,36 @@ type ChallengeType = {
     id: string
 }
 
+export type AmountType = {amount: number}
+
+interface EarnedPointsType {
+    [any: string]: AmountType;
+}
+
 type WasmDataType = {
     gameId: GameId,
     challenge: ChallengeType,
-    earnedAssets: EarnedAssetsType
+    earnedPoints: EarnedPointsType,
+    assetClicks: AssetsClicksType
+}
+
+export const trueWASMData = {
+    "gameId": "ec4e3774-b5a7-4789-a23b-cc02cb655ca6",
+    "challenge": {
+        "id": "a9a6fdff-69c5-43a3-8bb7-fdf0f875766f",
+        "nonce": 74114,
+        "hash": "00001976638fc4d4aea3cdcbeaae2b17eb99306c814dc7e78e89ef448a1895ff"
+    },
+    "earnedPoints": {
+        "BP": {"amount": 219}
+    },
+    "assetClicks": {
+        "CLOVER": {"clicks": 74},
+        "FREEZE": {"clicks": 3},
+        "BOMB": {"clicks": 0},
+        "TRUMP": {"clicks": 10},
+        "HARRIS": {"clicks": 19}
+    }
 }
 
 export class GameIdNotSetError extends Error {
@@ -44,13 +72,13 @@ export const generateUUID = () => {
 }
 
 export function generatePayload(wasmData: WasmDataType) : PayloadType {
-    return B(wasmData.gameId, wasmData.challenge, wasmData.earnedAssets);
+    return F(wasmData.gameId, wasmData.challenge, wasmData.earnedPoints, wasmData.assetClicks);
 }
 
 export function generateChallenge(gameId: GameId) : ChallengeType {
     if (!gameId) throw new GameIdNotSetError();
     try {
-        const challengeData = F(gameId)
+        const challengeData = D(gameId)
         return {id: generateUUID(), ...challengeData};
     } catch (error) {
         if (error instanceof TypeError &&
@@ -63,11 +91,12 @@ export function generateChallenge(gameId: GameId) : ChallengeType {
 
 }
 
-export async function getPayload(gameId: GameId, earnedAssets: EarnedAssetsType) {
+export async function getPayload(gameId: GameId, earnedPoints: EarnedPointsType, assetClicks: AssetsClicksType) {
     const wasmData = {
         gameId: gameId,
         challenge: generateChallenge(gameId),
-        earnedAssets: earnedAssets
+        earnedPoints: earnedPoints,
+        assetClicks: assetClicks
     };
     const payload = generatePayload(wasmData);
     return {payload: payload};

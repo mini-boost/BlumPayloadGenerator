@@ -26,17 +26,18 @@ router.get("/status", async (req: Request, res: Response) => {
 router.post("/getPayload", async (req: Request, res: Response) => {
     try {
         const gameId = req.body.gameId;
-        const earnedAssets = req.body.earnedAssets;
-
+        const earnedPoints = req.body.earnedPoints;
+        const assetClicks = req.body.assetClicks;
         let generationTime = Date.now()
         let wasmData = {
             gameId: gameId,
             challenge: generateChallenge(gameId),
-            earnedAssets: earnedAssets
+            earnedPoints: earnedPoints,
+            assetClicks: assetClicks
         };
         const payload = generatePayload(wasmData);
         generationTime = (Date.now() - generationTime)
-        const assets = JSON.stringify(earnedAssets)
+        const assets = JSON.stringify({earnedPoints: earnedPoints, assetClicks: assetClicks})
         debug(req, `[${counter++}] generated (${generationTime}ms) payload to game: ${gameId}, assets: ${assets}`);
         res.status(StatusCodes.OK).json({
             payload: payload,
