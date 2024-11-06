@@ -44,22 +44,29 @@ export const trueWASMData = {
     "assetClicks": {
         "CLOVER": {"clicks": 74},
         "FREEZE": {"clicks": 3},
-        "BOMB": {"clicks": 0},
-        "TRUMP": {"clicks": 10},
-        "HARRIS": {"clicks": 19}
+        "BOMB": {"clicks": 0}
     }
-}
-
-export class GameIdNotSetError extends Error {
-    message = "gameId not set from json body"
 }
 
 export class WasmFileNotLoadedError extends Error {
     message = 'wasm file not loaded for generator! use "await loadWasmFileForGenerator("game_wasm_bg-BnV071fP.wasm")"'
 }
 
-export async function loadWasmFileForGenerator(gameWasmFile: string) {
-    const file = fs.readFileSync(gameWasmFile);
+export function checkRequestDataStructure(data: any): boolean {
+    if (!data?.gameId) return false
+    if (typeof(data?.earnedPoints) !== "object") return false
+    for (const key of Object.keys(data.earnedPoints)) {
+        if (typeof(data.earnedPoints[key]?.amount) !== "number") return false
+    }
+    if (typeof(data?.assetClicks) !== "object") return false
+    for (const key of Object.keys(data.assetClicks)) {
+        if (typeof(data.assetClicks[key]?.clicks) !== "number") return false
+    }
+    return true
+}
+
+export async function loadWasmFileForGenerator(gameWasmFilePath: string) {
+    const file = fs.readFileSync(gameWasmFilePath);
     await R(file);
 }
 
@@ -76,7 +83,6 @@ export function generatePayload(wasmData: WasmDataType) : PayloadType {
 }
 
 export function generateChallenge(gameId: GameId) : ChallengeType {
-    if (!gameId) throw new GameIdNotSetError();
     try {
         const challengeData = D(gameId)
         return {id: generateUUID(), ...challengeData};
