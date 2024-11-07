@@ -36,7 +36,7 @@ router.post("/getPayload", async (req: Request, res: Response) => {
         generationTime = Date.now() - generationTime;
 
         const assetClicksText = Object.keys(assetClicks).map(key => `${key}: ${assetClicks[key].clicks}`).join(" ");
-        const status = `earn: ${earnedPoints}, assetClicks: ${assetClicksText}`;
+        const status = `earn: ${earnedPoints.BP.amount}, assetClicks: ${assetClicksText}`;
         const debugTest = gameId === appConstants.TEST_GAME_ID ?
             "successful test generate payload to game" :
             `[${counter++}] generated (${generationTime}ms) payload to game: ${gameId}, ${status}`;
