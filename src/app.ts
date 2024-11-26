@@ -7,7 +7,7 @@ import {startText} from "./logo";
 
 dotenv.config()
 
-const PORT = process.env.PORT || appConstants.DEFAULT_PORT;
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : appConstants.DEFAULT_PORT;
 const generatorWasmPath = `${appConstants.INCLUDES_PATH}/${appConstants.GENERATOR_WASM_FILENAME}`;
 
 
@@ -26,7 +26,10 @@ async function start() {
 
     console.log(startText);
     const onSuccess = `Server Blum payload generator (v${appConstants.GENERATOR_VERSION}) was started on port ${PORT}`
-    app.listen(PORT, () => console.log(onSuccess));
+    // app.listen(PORT, () => console.log(onSuccess));
+    app.listen(PORT, '127.0.0.1', () => {
+        console.log(onSuccess);
+    });
 }
 
 start().then()
